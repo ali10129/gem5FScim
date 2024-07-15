@@ -430,6 +430,14 @@ DRAMInterface::doBurstAccess(MemPacket* mem_pkt, Tick next_burst_at,
         mem_pkt->readyTime = cmd_at + tWL + tBURST;
     }
 
+    if (cimHandlerPtr != nullptr) {
+        if((mem_pkt->getAddr() == 0x60000000) || (mem_pkt->getAddr() == 0x60000100) || 
+        (mem_pkt->getAddr() == 0x60000200) ||(mem_pkt->getAddr() == 0x60000300))
+        {        
+            mem_pkt->readyTime += cimHandlerPtr->getCimLatency(mem_pkt->getAddr());
+        }
+    }
+
     rank_ref.lastBurstTick = cmd_at;
 
     // update the time for the next read/write burst for each
@@ -661,6 +669,8 @@ DRAMInterface::DRAMInterface(const DRAMInterfaceParams &_p)
       stats(*this)
 {
     DPRINTF(DRAM, "Setting up DRAM Interface\n");
+
+    cimHandlerPtr= _p.cimObj;
 
     fatal_if(!isPowerOf2(burstSize), "DRAM burst size %d is not allowed, "
              "must be a power of two\n", burstSize);

@@ -50,6 +50,8 @@
 #include "mem/mem_interface.hh"
 #include "params/DRAMInterface.hh"
 
+#include "mem/cimTutorial/cim_handler.hh"
+
 namespace gem5
 {
 

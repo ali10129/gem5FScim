@@ -1,0 +1,7 @@
+Import("*")
+
+SimObject("OurHandler.py", sim_objects=["CimHandler"])
+
+Source("cim_handler.cc")
+
+DebugFlag("CIMDBG")

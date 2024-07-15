@@ -41,6 +41,7 @@
 from m5.objects.MemCtrl import MemCtrl
 from m5.objects.MemInterface import *
 
+from m5.objects.OurHandler import CimHandler
 
 # Enum for the page policy, either open, open_adaptive, close, or
 # close_adaptive.
@@ -52,6 +53,8 @@ class DRAMInterface(MemInterface):
     type = "DRAMInterface"
     cxx_header = "mem/dram_interface.hh"
     cxx_class = "gem5::memory::DRAMInterface"
+
+    cimObj = Param.CimHandler(CimHandler(), "an object instance")
 
     # scheduler page policy
     page_policy = Param.PageManage("open_adaptive", "Page management policy")

@@ -52,6 +52,7 @@
 #include "sim/clocked_object.hh"
 #include "sim/stats.hh"
 
+#include "mem/cimTutorial/cim_handler.hh"
 namespace gem5
 {
 
@@ -59,6 +60,8 @@ class System;
 
 namespace memory
 {
+
+class CimHandler;   //forward declaration
 
 /**
  * Locked address class that represents a physical address and a
@@ -220,6 +223,8 @@ class AbstractMemory : public ClockedObject
     AbstractMemory& operator=(const AbstractMemory&);
 
   public:
+
+    CimHandler* cimHandlerPtr;
 
     PARAMS(AbstractMemory);
 

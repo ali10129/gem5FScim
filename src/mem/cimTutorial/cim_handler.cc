@@ -33,13 +33,16 @@ gem5::memory::CimHandler::cimFetchCommand(
             {
                 case 0u:
                     DPRINTF(
-                        CIMDBG, "\033[1;32m NULL(0) command: 0x%lx \033[0m\n",
+                        CIMDBG,
+                        "\033[1;32m NULL(0) command written at 0x%lx "
+                        "\033[0m\n",
                         pkt->getAddr());
-                    dest[0] = 0x10101010u;
+                    dest[0] = 0x10101010u; // <= reseting dest value for test
                     break;
                 case 0xAAAAAAAAu:
                     DPRINTF(
-                        CIMDBG, "\033[1;32m AND command: 0x%lx \033[0m\n",
+                        CIMDBG,
+                        "\033[1;32m AND command written at 0x%lx \033[0m\n",
                         pkt->getAddr());
                     dest[0] = sr1[0] & sr2[0];
                     command_address[0] = 0;
@@ -48,7 +51,8 @@ gem5::memory::CimHandler::cimFetchCommand(
                     break;
                 case 0xBBBBBBBBu:
                     DPRINTF(
-                        CIMDBG, "\033[1;32m OR command: 0x%lx \033[0m\n",
+                        CIMDBG,
+                        "\033[1;32m OR command written at 0x%lx \033[0m\n",
                         pkt->getAddr());
                     dest[0] = sr1[0] | sr2[0];
                     command_address[0] = 0;
@@ -56,7 +60,8 @@ gem5::memory::CimHandler::cimFetchCommand(
                     break;
                 case 0xCCCCCCCCu:
                     DPRINTF(
-                        CIMDBG, "\033[1;32m XOR command: 0x%lx \033[0m\n",
+                        CIMDBG,
+                        "\033[1;32m XOR command written at 0x%lx \033[0m\n",
                         pkt->getAddr());
                     dest[0] = sr1[0] ^ sr2[0];
                     command_address[0] = 0;
@@ -66,7 +71,7 @@ gem5::memory::CimHandler::cimFetchCommand(
                 default:
                     DPRINTF(
                         CIMDBG,
-                        "\033[1;32m dummy command: "
+                        "\033[1;32m dummy command with value "
                         "0x%08x \033[0m\n",
                         command_address[0]);
                     break;

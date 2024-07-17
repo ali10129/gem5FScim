@@ -33,7 +33,7 @@ gem5::memory::CimHandler::cimFetchCommand(
             {
                 case 0u:
                     DPRINTF(
-                        CIMDBG, "\033[1;32m Zero command: 0x%lx \033[0m\n",
+                        CIMDBG, "\033[1;32m NULL(0) command: 0x%lx \033[0m\n",
                         pkt->getAddr());
                     dest[0] = 0x10101010u;
                     break;
@@ -44,8 +44,7 @@ gem5::memory::CimHandler::cimFetchCommand(
                     dest[0] = sr1[0] & sr2[0];
                     command_address[0] = 0;
                     unitReleaseTime = operationsLatency[0];
-                    // ! bug: we never clear ReleaseTime so they will
-                    // accumulated!!
+                    // ! bug: this in not a proper way to set the delay but...
                     break;
                 case 0xBBBBBBBBu:
                     DPRINTF(
@@ -67,9 +66,9 @@ gem5::memory::CimHandler::cimFetchCommand(
                 default:
                     DPRINTF(
                         CIMDBG,
-                        "\033[1;32m different command: 0x%lx : command: "
-                        "0x%016lx \033[0m\n",
-                        pkt->getAddr(), command_address[0]);
+                        "\033[1;32m dummy command: "
+                        "0x%08x \033[0m\n",
+                        command_address[0]);
                     break;
             }
         }

@@ -393,15 +393,6 @@ AbstractMemory::access(PacketPtr pkt)
 
     assert(pkt->getAddrRange().isSubset(range));
 
-    if ((pkt->getAddr() >= 0x60000000) && (pkt->getAddr() < 0x61000000)) {
-        DPRINTF(CIMDBG,
-            "\n\033[1;34m" // printing lines in blue
-            "size: %d (Bytes), \033[1;31m %s \033[1;34m in 0x%08lx"
-            "\033[0m\n",
-            pkt->getSize(),
-            pkt->isRead() ? "read" : "write", pkt->getAddr());
-        cimHandlerPtr->cimFetchCommand(this, pkt);
-    }
 
     uint8_t *host_addr = toHostAddr(pkt->getAddr());
 
@@ -492,6 +483,16 @@ AbstractMemory::access(PacketPtr pkt)
 
     if (pkt->needsResponse()) {
         pkt->makeResponse();
+    }
+
+    if ((pkt->getAddr() >= 0x60000000) && (pkt->getAddr() < 0x61000000)) {
+        DPRINTF(CIMDBG,
+            "\n\033[1;34m" // printing lines in blue
+            "size: %d (Bytes), \033[1;31m %s \033[1;34m in 0x%08lx"
+            "\033[0m\n",
+            pkt->getSize(),
+            pkt->isRead() ? "read" : "write", pkt->getAddr());
+        cimHandlerPtr->cimFetchCommand(this, pkt);
     }
 }
 
